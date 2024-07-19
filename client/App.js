@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="about">
+            <Stack.Navigator initialRouteName="home">
                 <Stack.Screen name="home" component={Home} options={{
                     headerShown: false,
                 }}/>
@@ -22,12 +22,3 @@ export default function App() {
         </NavigationContainer>
     );
 }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#fff',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-// });
