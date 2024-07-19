@@ -1,17 +1,16 @@
-import { View, Text } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 import ProductsCard from "./ProductsCard";
-import {ProductsData} from "../../data/ProductsData";
+import { ProductsData } from "../../data/ProductsData";
 
 const Products = () => {
     return (
         <View>
-            {
-                ProductsData.map(product => (
-                    <ProductsCard key={product._id} product={product} />
-                ))
-            }
+            {ProductsData.map((product) => (
+                <ProductsCard key={product._id} product={product} />
+            ))}
         </View>
-    )
-}
+    );
+};
 
 export default Products;

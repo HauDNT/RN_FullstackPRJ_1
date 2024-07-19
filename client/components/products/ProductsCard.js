@@ -33,49 +33,55 @@ const ProductsData = ({product}) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+    },
     card: {
-        borderWidth: 1,
-        borderColor: "lightgray",
-        marginVertical: 5,
-        marginHorizontal: 8,
-        width: "45%",
+        width: '50%',
+        margin: 5,
         padding: 10,
-        backgroundColor: "#FFF",
-        justifyContent: "center",
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     cardImage: {
-        height: 185,
         width: "100%",
-        marginBottom: 10,
+        height: 210,
+        borderRadius: 10,
     },
     cardTitle: {
-        fontSize: 12,
+        fontSize: 15,
         fontWeight: "bold",
-        marginBottom: 5,
+        marginVertical: 10,
     },
     cardDesc: {
-        fontSize: 12,
-        textAlign: "left",
+        fontSize: 14,
+        color: "#666",
     },
     btnContainer: {
-        marginTop: 5,
         flexDirection: "row",
+        marginTop: 10,
         justifyContent: "space-between",
-        alignItems: "center",
     },
     btn: {
-        backgroundColor: "#000",
-        height: 20,
-        width: 65,
+        padding: 10,
+        backgroundColor: "#007BFF",
         borderRadius: 5,
-        justifyContent: "center",
     },
     btnText: {
         color: "#fff",
-        textAlign: "center",
-        fontSize: 10,
-        fontWeight: "bold",
-    }
+        fontSize: 14,
+    },
 });
 
 export default ProductsData;

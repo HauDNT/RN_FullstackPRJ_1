@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
+import Header from "../components/layouts/Header";
 import Layout from "../components/layouts/Layout";
 import Categories from "../components/category/Categories";
 import Banner from "../components/banner/Banner";
@@ -6,11 +7,14 @@ import Products from "../components/products/Products";
 
 const Home = () => {
     return (
-        <Layout>
-            <Categories/>
-            <Banner/>
-            <Products/>
-        </Layout>
+        <ScrollView>
+            <Layout>
+                <Header/>
+                <Categories/>
+                <Banner/>
+                <Products/>
+            </Layout>
+        </ScrollView>
     );
 };
 
