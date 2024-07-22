@@ -1,14 +1,13 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 const Footer = () => {
     const route = useRoute();
-    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.menuContainer} onPress={() => navigation.navigate("home")}>
+            <TouchableOpacity style={styles.menuContainer} onPress={() => alert("Home page")}>
                 <AntDesign name="home" style={[styles.icon, route.name === "home" && styles.active]} />
                 <Text style={[styles.iconText, route.name === "home" && styles.active]}>Home</Text>
             </TouchableOpacity>
@@ -20,7 +19,7 @@ const Footer = () => {
                 <AntDesign name="user" style={[styles.icon, route.name === "account" && styles.active]} />
                 <Text style={[styles.iconText, route.name === "account" && styles.active]}>Account</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuContainer} onPress={() => navigation.navigate("cart")}>
+            <TouchableOpacity style={styles.menuContainer} onPress={() => alert("Card page")}>
                 <AntDesign name="shoppingcart" style={[styles.icon, route.name === "card" && styles.active]} />
                 <Text style={[styles.iconText, route.name === "card" && styles.active]}>Card</Text>
             </TouchableOpacity>
