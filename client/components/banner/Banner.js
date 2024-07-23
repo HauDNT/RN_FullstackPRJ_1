@@ -43,39 +43,39 @@ const Banner = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    width,
-  },
-  cardWrapper: {
-    //   borderRadius: 8,
-    overflow: "hidden",
-  },
-  card: {
-    width: width * 1,
-    height: width * 0.4,
-  },
-  cornerLabel: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    borderTopLeftRadius: 8,
-  },
-  cornerLabelText: {
-    fontSize: 12,
-    color: "#fff",
-    fontWeight: "600",
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingTop: 2,
-    paddingBottom: 2,
-  },
+    container: {
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    cardContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        width,
+    },
+    cardWrapper: {
+        //   borderRadius: 8,
+        overflow: "hidden",
+    },
+    card: {
+        width: width * 1,
+        height: width * 0.4,
+    },
+    cornerLabel: {
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        borderTopLeftRadius: 8,
+    },
+    cornerLabelText: {
+        fontSize: 12,
+        color: "#fff",
+        fontWeight: "600",
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 2,
+        paddingBottom: 2,
+    },
 });
 
 export default Banner;

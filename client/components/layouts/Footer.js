@@ -24,7 +24,7 @@ const Footer = () => {
                 <AntDesign name="shoppingcart" style={[styles.icon, route.name === "card" && styles.active]} />
                 <Text style={[styles.iconText, route.name === "card" && styles.active]}>Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuContainer} onPress={() => alert("Logout")}>
+            <TouchableOpacity style={styles.menuContainer} onPress={() => {alert("Logout"), navigation.navigate("login")}}>
                 <AntDesign name="logout" style={[styles.icon, route.name === "logout" && styles.active]} />
                 <Text style={[styles.iconText, route.name === "logout" && styles.active]}>Logout</Text>
             </TouchableOpacity>
