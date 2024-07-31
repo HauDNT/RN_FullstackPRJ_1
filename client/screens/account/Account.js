@@ -33,7 +33,7 @@ const Account = ({ navigation }) => {
                         <AntDesign name="bells" style={styles.btnText}/>
                         <Text style={styles.btnText}>Notification</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("adminPanel")}>
                         <AntDesign name="windows" style={styles.btnText}/>
                         <Text style={styles.btnText}>Admin Panel</Text>
                     </TouchableOpacity>

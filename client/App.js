@@ -14,8 +14,8 @@ import Account from './screens/account/Account';
 import Notifications from './screens/account/Notifications';
 import Profile from './screens/account/Profile';
 import MyOrders from './screens/account/MyOrders';
+import Dashboard from './screens/admin/Dashboard';
 
-// routes:
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,8 +29,9 @@ export default function App() {
                 <Stack.Screen name="productDetails" component={ProductDetails}/>
                 <Stack.Screen name="checkout" component={Checkout}/>
                 <Stack.Screen name="myorders" component={MyOrders}/>
-                <Stack.Screen name="notification" component={Notifications}/>
                 <Stack.Screen name="profile" component={Profile}/>
+                <Stack.Screen name="notification" component={Notifications}/>
+                <Stack.Screen name="adminPanel" component={Dashboard}/>
                 <Stack.Screen name="login" component={Login} options={{
                     headerShown: false,
                 }}/>
