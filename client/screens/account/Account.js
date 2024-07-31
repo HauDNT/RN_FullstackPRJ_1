@@ -3,12 +3,8 @@ import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Layout from "../../components/layouts/Layout";
 import { UserData } from "../../data/UserData";
-import { useRoute, useNavigation } from "@react-navigation/native";
 
-const Account = () => {
-    const route = useRoute();
-    const navigation = useNavigation();
-
+const Account = ({ navigation }) => {
     return (
         <Layout>
             <View style={styles.container}>
@@ -25,7 +21,7 @@ const Account = () => {
                 </View>
                 <View style={styles.btnContainer}>
                     <Text style={styles.heading}>Account settings</Text>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("profile", {id: UserData._id})}>
                         <AntDesign name="edit" style={styles.btnText}/>
                         <Text style={styles.btnText}>Edit Profile</Text>
                     </TouchableOpacity>
@@ -33,7 +29,7 @@ const Account = () => {
                         <AntDesign name="bars" style={styles.btnText}/>
                         <Text style={styles.btnText}>My Orders</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("notification")}>
                         <AntDesign name="bells" style={styles.btnText}/>
                         <Text style={styles.btnText}>Notification</Text>
                     </TouchableOpacity>
@@ -50,11 +46,11 @@ const Account = () => {
 const styles = StyleSheet.create({
     container: {
         marginVertical: 20,
-        resizeMode: "contain",
     },
     image: {
         height: 100,
         width: "100%",
+        resizeMode: "center",
     },
     name: {
         marginTop: 10,

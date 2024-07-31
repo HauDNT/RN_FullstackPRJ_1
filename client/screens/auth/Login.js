@@ -9,13 +9,14 @@ const Login = ({navigation}) => {
 
     // Login function:
     const handleLogin = () => {
-        if (!email || !password) {
-            return alert("Please add email or password!");
-        }
-        else {
-            alert("Login success!");
-            navigation.navigate("home");
-        }
+        // if (!email || !password) {
+        //     return alert("Please add email or password!");
+        // }
+        // else {
+        //     navigation.navigate("home");
+        // }
+
+        navigation.navigate("home");
     };
 
     return (

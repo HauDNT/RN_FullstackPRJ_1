@@ -11,12 +11,15 @@ import Payment from './screens/Payment';
 import Login from './screens/auth/Login';
 import Register from './screens/auth/Register';
 import Account from './screens/account/Account';
+import Notifications from './screens/account/Notifications';
+import Profile from './screens/account/Profile';
 
 // routes:
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
+        // Routes:
         <NavigationContainer>
             <Stack.Navigator initialRouteName="login">
                 <Stack.Screen name="home" component={Home} options={{
@@ -24,6 +27,8 @@ export default function App() {
                 }}/>
                 <Stack.Screen name="productDetails" component={ProductDetails}/>
                 <Stack.Screen name="checkout" component={Checkout}/>
+                <Stack.Screen name="notification" component={Notifications}/>
+                <Stack.Screen name="profile" component={Profile}/>
                 <Stack.Screen name="login" component={Login} options={{
                     headerShown: false,
                 }}/>
