@@ -25,7 +25,7 @@ const Account = ({ navigation }) => {
                         <AntDesign name="edit" style={styles.btnText}/>
                         <Text style={styles.btnText}>Edit Profile</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate("myorders", {id: UserData._id})}>
                         <AntDesign name="bars" style={styles.btnText}/>
                         <Text style={styles.btnText}>My Orders</Text>
                     </TouchableOpacity>
