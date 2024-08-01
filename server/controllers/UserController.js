@@ -62,7 +62,7 @@ class UserController {
                 };
 
                 // Generate token:
-                const token = authService.generateToken(data.email);
+                const token = await authService.generateToken(data.email);
 
                 return res
                         .status(200)
@@ -70,7 +70,7 @@ class UserController {
                             "token", 
                             token, 
                             {
-                                expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+                                expires: new Date(Date.now()),
                                 secure: process.env.NODE_ENV === "development" ? true : false,
                                 httpOnly: process.env.NODE_ENV === "development" ? true : false,
                                 sameSite: process.env.NODE_ENV === "development" ? true : false,
@@ -97,6 +97,54 @@ class UserController {
             });
         }
     }
+
+    async getProfile(req, res) {
+        try {
+            const userProfile = await userService.getUserById(req.user._id);
+
+            return res.status(200).send({
+                success: true,
+                message: "User profile fetched success",
+                userProfile,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({
+                success: false,
+                message: "Error in profile API",
+                error,
+            });
+        }
+    }
+
+    async logout (req, res) {
+        try {
+            res
+                .status(200)
+                .cookie(
+                    "token", 
+                    "", 
+                    {
+                        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+                        secure: process.env.NODE_ENV === "development" ? true : false,
+                        httpOnly: process.env.NODE_ENV === "development" ? true : false,
+                        sameSite: process.env.NODE_ENV === "development" ? true : false,
+                    },
+                )
+                .send({
+                    success: true,
+                    message: "Logout success",
+                });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({
+                success: false,
+                message: "Error in logout API",
+                error,
+            });
+        }
+    }
 }
 
-export default UserController;
+const userController = new UserController();
+export default userController;

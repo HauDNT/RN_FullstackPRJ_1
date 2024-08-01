@@ -2,11 +2,11 @@ import JWT from "jsonwebtoken";
 import UserModel from "../models/UserModel.js";
 
 class AuthService {
-    generateToken(email) {
-        const userId = UserModel.findOne({email}).select('_id').lean();
+    async generateToken(email) {
+        const userId = await UserModel.findOne({email}).select('_id').lean();
 
         return JWT.sign(
-            { _id: +userId }, 
+            { _id: userId._id.toString() }, 
             process.env.JWT_SECRET_KEY,
             {
                 expiresIn: "7d",

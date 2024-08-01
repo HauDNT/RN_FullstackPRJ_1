@@ -72,6 +72,31 @@ class UserService {
             };
         }
     }
+
+    async getUserById(id) {
+        try {
+            const user = await UserModel.findById(id);
+            user.password = undefined;
+
+            if (!user) {
+                return {
+                    success: false,
+                    message: "User not found",
+                };
+            }
+    
+            return {
+                success: true,
+                message: "Fetch success",
+                user,
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error in fetch profile",
+            };
+        }
+    }
 }
 
 // Khởi tạo instance User Service:
