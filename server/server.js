@@ -5,6 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
+// Import routes:
+import UserRoutes from "./routes/UserRoutes.js";
+
 // dot env config:
 dotenv.config();
 
@@ -20,6 +23,8 @@ app.use(express.json());
 app.use(cors());
 
 // Routes:
+app.use("/api/user", UserRoutes);
+
 app.get("/", (req, res) => {
     return res.status(200).send("<h1>Welcome to Server</h1>");
 });
