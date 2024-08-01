@@ -1,8 +1,5 @@
-import UserService from "../services/UserService.js";
-import UserModel from "../models/UserModel.js";
-
-// Khởi tạo instance User Service:
-const userService = new UserService();
+import userService from "../services/UserService.js";
+import authService from "../services/AuthService.js";
 
 class UserController {
     async register (req, res) {
@@ -48,11 +45,11 @@ class UserController {
             const validationFields = userService.validationFields(['email', 'password'], data);
             if (!validationFields.success) return res.status(500).send(validationFields);
 
-            // Check user:
-            const user = await userService.checkEmailExist(data.email);
+            // Check email user exists:
+            const checkEmail = await userService.checkEmailExist(data.email);
 
             // User validation:
-            if (!user.success)      // Nghĩa là tìm thấy email/user trong DB
+            if (!checkEmail.success)      // Nghĩa là tìm thấy email/user trong DB
             {
                 // Check password:
                 const isPassMatch = await userService.comparePassword(data.email, data.password);
@@ -64,10 +61,26 @@ class UserController {
                     });
                 };
 
-                return res.status(200).send({
-                    success: true,
-                    message: "Login success",
-                });
+                // Generate token:
+                const token = authService.generateToken(data.email);
+
+                return res
+                        .status(200)
+                        .cookie(
+                            "token", 
+                            token, 
+                            {
+                                expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+                                secure: process.env.NODE_ENV === "development" ? true : false,
+                                httpOnly: process.env.NODE_ENV === "development" ? true : false,
+                                sameSite: process.env.NODE_ENV === "development" ? true : false,
+                            },
+                        )
+                        .send({
+                            success: true,
+                            message: "Login success",
+                            token,
+                        });
             }
             else {
                 return res.status(500).send({

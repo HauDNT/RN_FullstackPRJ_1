@@ -17,7 +17,7 @@ const Account = ({ navigation }) => {
                         </Text>
                     </Text>
                     <Text>Email: {UserData.email}</Text>
-                    <Text>Email: {UserData.contact}</Text>
+                    <Text>Contact: {UserData.contact}</Text>
                 </View>
                 <View style={styles.btnContainer}>
                     <Text style={styles.heading}>Account settings</Text>

@@ -74,4 +74,7 @@ class UserService {
     }
 }
 
-export default UserService;
+// Khởi tạo instance User Service:
+const userService = new UserService();
+
+export default userService;

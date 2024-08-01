@@ -3,6 +3,7 @@ import colors from "colors";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 
 // Import routes:
@@ -21,6 +22,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // Routes:
 app.use("/api/user", UserRoutes);
@@ -34,6 +36,6 @@ const PORT = process.env.PORT || 5000;
 
 // Listen:
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`.blue);
+    console.log(`Server running on ${process.env.NODE_ENV} mode -> port ${PORT}`.blue);
 });
 
