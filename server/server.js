@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 
 // Import routes:
 import UserRoutes from "./routes/UserRoutes.js";
+import ProductRoutes from "./routes/ProductRoutes.js";
 
 // dot env config:
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(cookieParser());
 
 // Routes:
 app.use("/api/user", UserRoutes);
+app.use("/api/product", ProductRoutes);
 
 app.get("/", (req, res) => {
     return res.status(200).send("<h1>Welcome to Server</h1>");
