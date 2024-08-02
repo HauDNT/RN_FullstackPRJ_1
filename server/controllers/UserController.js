@@ -52,7 +52,7 @@ class UserController {
             if (!checkEmail.success)      // Nghĩa là tìm thấy email/user trong DB
             {
                 // Check password:
-                const isPassMatch = await userService.comparePassword(data.email, data.password);
+                const isPassMatch = await userService.comparePassword(data.email, "email", data.password);
 
                 if (!isPassMatch.success) {
                     return res.status(500).send({
@@ -70,7 +70,7 @@ class UserController {
                             "token", 
                             token, 
                             {
-                                expires: new Date(Date.now()),
+                                expires: new Date(Date.now() + 8 * 3600000),
                                 secure: process.env.NODE_ENV === "development" ? true : false,
                                 httpOnly: process.env.NODE_ENV === "development" ? true : false,
                                 sameSite: process.env.NODE_ENV === "development" ? true : false,
@@ -140,6 +140,78 @@ class UserController {
             return res.status(500).send({
                 success: false,
                 message: "Error in logout API",
+                error,
+            });
+        }
+    }
+
+    async updateProfile(req, res) {
+        try {
+            const user = await userService.getUserById(req.user._id, true);
+    
+            // Danh sách các trường cần cập nhật
+            const fieldsToUpdate = ['name', 'email', 'address', 'city', 'contact'];
+    
+            // Cập nhật các trường nếu có trong req.body
+            fieldsToUpdate.forEach(field => {
+                if (req.body[field] !== undefined) {
+                    user[field] = req.body[field];
+                }
+            });
+    
+            // Lưu user
+            await user.save();
+    
+            return res.status(200).send({
+                success: true,
+                message: "User's profile updated!",
+            });
+        } catch (error) {
+            return res.status(500).send({
+                success: false,
+                message: "Error in update profile API",
+                error,
+            });
+        }
+    }
+
+    async updatePassword (req, res) {
+        try {
+            const user = await userService.getUserById(req.user._id);
+
+            const { oldPassword, newPassword } = req.body;
+
+            // Validation
+            const validFields = userService.validationFields(['oldPassword', 'newPassword'], req.body);
+
+            if (!validFields.success) {
+                return res.status(500).send(validFields);
+            }
+
+            // Old password check
+            const matchPassword = await userService.comparePassword(req.user._id, "_id", oldPassword);
+                        
+            if (!matchPassword.success) {
+                return res.status(500).send(matchPassword);
+            };
+
+            // Hash password
+            const newPasswordHashed = await userService.hashingPassword(newPassword);
+            
+            user.password = newPasswordHashed;
+
+            // Save user
+            await user.save();
+
+            return res.status(200).send({
+                success: true,
+                message: "User's password updated!",
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({
+                success: false,
+                message: "Error in update profile API",
                 error,
             });
         }

@@ -22,10 +22,9 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [
-            true,
-            "password is required",
-        ],
+        required: function() {
+            return this.isNew || this.isModified('password');   // Chỉ yêu cầu mật khẩu khi tạo tài khoản hoặc có thay đổi mật khẩu
+        },
         minLength: [6, "Password length should be greater than 6 characters"],
     },
     address: {

@@ -2,9 +2,9 @@ import bcrypt from "bcryptjs";
 import UserModel from "../models/UserModel.js";
 
 class UserService {
-    validationFields (fields, data) {
+    validationFields (fields, data, optionalFields = []) {
         for (let field of fields) {
-            if (!data[field]) {
+            if (!data[field] && !optionalFields.includes(field)) {
                 return {
                     success: false,
                     message: `Please provide field ${field}`,
@@ -37,9 +37,9 @@ class UserService {
         }
     }
 
-    async comparePassword (email, plainPassword) {
+    async comparePassword (userAttributeUnique, nameAttribute, plainPassword) {
         try {
-            const user = await UserModel.findOne({email});
+            const user = await UserModel.findOne({[nameAttribute]: userAttributeUnique});
             const compareStatus = await bcrypt.compare(plainPassword, user.password);
 
             if (!compareStatus)
@@ -73,10 +73,13 @@ class UserService {
         }
     }
 
-    async getUserById(id) {
+    async getUserById(id, enablePassword = false) {
         try {
             const user = await UserModel.findById(id);
-            user.password = undefined;
+
+            if (!enablePassword) {
+                user.password = undefined;
+            }
 
             if (!user) {
                 return {
@@ -85,11 +88,7 @@ class UserService {
                 };
             }
     
-            return {
-                success: true,
-                message: "Fetch success",
-                user,
-            };
+            return user;
         } catch (error) {
             return {
                 success: false,
