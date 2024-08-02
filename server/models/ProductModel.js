@@ -40,10 +40,16 @@ const productSchema = new mongoose.Schema({
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: "Category",
     // },
-    images: {
-        public_id: String,
-        url: String,
-    },
+    images: [
+        {
+            public_id: {
+                type: String,
+            },
+            url: {
+                type: String,
+            },
+        },
+    ],
 }, { timestamps: true });
 
 export const Product = mongoose.model("Product", productSchema);

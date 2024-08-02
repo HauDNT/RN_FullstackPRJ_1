@@ -9,5 +9,7 @@ const router = express.Router();
 router.get("/get-all", productController.getAllProducts);
 router.get("/:id", productController.getSingleProduct);
 router.post("/create", isAuth, singleUpload, productController.createProduct);
+router.put("/:id", isAuth, productController.updateProduct);
+router.put("/images-update/:id", isAuth, singleUpload, productController.updateProductImages);
 
 export default router;

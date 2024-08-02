@@ -93,8 +93,6 @@ class ProductController {
 
             return res.status(200).send("Create product success");
         } catch (error) {
-            console.log(error);
-            
             return res.status(500).send({
                 success: false,
                 message: "Error in create product API",
@@ -103,10 +101,94 @@ class ProductController {
         }
     }
 
+    async updateProduct(req, res) {
+        try {
+            // Find product
+            const product = await productService.getAProduct(req.params.id);
 
+            // Validation
+            if (!product) {
+                return res.status(404).send({
+                    success: false,
+                    message: "Product not found",
+                })
+            };
 
+            const fields = ["name", "description", "price", "category", "stock"];
+            let data = req.body;
 
+            // Validation
+            const validation = productService.validationFields(fields, data);
 
+            if (validation.success === false) {
+                return res.status(404).send(validation);
+            };
+
+            // Cập nhật các trường nếu có trong req.body
+            fields.forEach(field => {
+                if (req.body[field] !== undefined) {
+                    product[field] = req.body[field];
+                }
+            });
+
+            await product.save();
+
+            return res.status(200).send({
+                success: true,
+                message: "Product details updated success",
+            });
+        } catch (error) {
+            return res.status(500).send({
+                success: false,
+                message: "Error in update product API",
+                error,
+            });
+        }
+    }
+
+    async updateProductImages (req, res) {
+        try {
+            // Find product
+            const product = await productService.getAProduct(req.params.id);
+
+            // Validation & check file:
+            if (!product) {
+                return res.status(404).send({
+                    success: false,
+                    message: "Product not found",
+                })
+            };
+
+            if (!req.file) {
+                return res.status(500).send({
+                    success: false,
+                    message: "Please provide images",
+                });
+            };
+
+            const file = getDataUri(req.file);
+            const cdb = await cloudinary.v2.uploader.upload(file.content);
+            const image = {
+                public_id: cdb.public_id,
+                url: cdb.secure_url,
+            };
+
+            // Save data:
+            product.images.push(image);
+            await product.save();
+
+            return res.status(200).send("Product image updated success");
+
+        } catch (error) {
+            console.log(error);
+            
+            return res.status(500).send({
+                success: false,
+                message: "Error in update images product API",
+                error,
+            });
+        }
+    }
 }
 
 const productController = new ProductController();

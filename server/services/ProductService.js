@@ -21,13 +21,9 @@ class ProductService {
 
     async getAProduct(id) {
         try {
-            const product = await ProductModel.findById(id);
+            const product = await ProductModel.findOne({ _id: id });
             return product;
         } catch (error) {
-            if (error.name === "CaseError") {
-                console.log("Invalid ID");
-            };
-
             console.log(error);
         }
     }
