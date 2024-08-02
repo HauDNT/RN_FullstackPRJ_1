@@ -1,5 +1,7 @@
 import userService from "../services/UserService.js";
 import authService from "../services/AuthService.js";
+import { getDataUri } from "../utils/Features.js";
+import cloudinary from "cloudinary";
 
 class UserController {
     async register (req, res) {
@@ -208,10 +210,52 @@ class UserController {
                 message: "User's password updated!",
             });
         } catch (error) {
-            console.log(error);
             return res.status(500).send({
                 success: false,
                 message: "Error in update profile API",
+                error,
+            });
+        }
+    }
+
+    async updateProfilePic (req, res) {
+        try {
+            // Check if file is available
+            if (!req.file) {
+                return res.status(400).send({
+                    success: false,
+                    message: "No file uploaded",
+                });
+            }
+
+            const user = await userService.getUserById(req.user._id, true);
+            
+            // File get from user upload
+            const file = getDataUri(req.file);
+
+            // Delete old avatar
+            await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+            // Update
+            const cdb = await cloudinary.v2.uploader.upload(file.content);
+            user.avatar = {
+                public_id: cdb.public_id,
+                url: cdb.secure_url,
+            }
+
+            // Save
+            await user.save();
+
+            return res.status(200).send({
+                success: true,
+                message: "Avatar updated success",
+            });
+        } catch (error) {
+            console.log(error);
+            
+            return res.status(500).send({
+                success: false,
+                message: "Error in update profile picture API",
                 error,
             });
         }

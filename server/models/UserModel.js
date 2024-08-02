@@ -49,8 +49,13 @@ const userSchema = new mongoose.Schema({
         ],
     },
     avatar: {
-        type: String,
-    }
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        },
+    },
 }, {timestamps: true});
 
 export const User = mongoose.model("User", userSchema);
