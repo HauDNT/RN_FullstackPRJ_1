@@ -11,5 +11,7 @@ router.get("/:id", productController.getSingleProduct);
 router.post("/create", isAuth, singleUpload, productController.createProduct);
 router.put("/:id", isAuth, productController.updateProduct);
 router.put("/images-update/:id", isAuth, singleUpload, productController.updateProductImages);
+router.delete("/delete/:id", isAuth, productController.deleteProduct);
+router.delete("/image-delete/:id", isAuth, productController.deleteImage);
 
 export default router;

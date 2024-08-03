@@ -189,6 +189,96 @@ class ProductController {
             });
         }
     }
+
+    async deleteProduct (req, res) {
+        try {
+            // Find product
+            const product = await productService.getAProduct(req.params.id);
+
+            // Validation & check file:
+            if (!product) {
+                return res.status(404).send({
+                    success: false,
+                    message: "Product not found",
+                })
+            };
+
+            // Find and delele images in cloudinary
+            for (let index = 0; index < product.images.length; index++) {
+                await cloudinary.v2.uploader.destroy(product.images[index].public_id);
+            };
+
+            // Remove item:
+            await product.deleteOne();
+
+            return res.status(200).send({
+                success: true,
+                message: "Product deleted success",
+            });
+        } catch (error) {
+            console.log(error);
+            
+            return res.status(500).send({
+                success: false,
+                message: "Error in update images product API",
+                error,
+            });
+        }
+    }
+
+    async deleteImage (req, res) {
+        try {
+            // Find product
+            const product = await productService.getAProduct(req.params.id);
+            
+            // Validation
+            if (!product) 
+                return res.status(404).send({
+                    success: false,
+                    message: "Product not found",
+                });
+
+            // Image id find
+            const imageId = req.query.id;
+            if (!imageId) 
+                return res.status(404).send({
+                    success: false,
+                    message: "Product image not found",
+                });
+            
+            let isExisting = -1;
+            product.images.forEach((item, index) => {
+                if (item._id.toString() === imageId.toString()) 
+                    isExisting = index;
+            });
+
+            if (isExisting < 0) 
+                return res.status(404).send({
+                    success: false,
+                    message: "Image not found",
+                });
+
+            // Delete product image
+            await cloudinary.v2.uploader.destroy(product.images[isExisting].public_id);
+            product.images.splice(isExisting, 1);
+
+            // Save
+            await product.save();
+
+            return res.status(200).send({
+                success: true,
+                message: "Delete image success",
+            });
+        } catch (error) {
+            console.log(error);
+
+            return res.status(500).send({
+                success: false,
+                message: "Error in delete images product API",
+                error,
+            });
+        }
+    }
 }
 
 const productController = new ProductController();
