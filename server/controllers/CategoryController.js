@@ -56,11 +56,22 @@ class CategoryController {
 
     async updateACategory(req, res) {
         try {
-            // Tạm thời ngừng tại đây, sẽ tiếp tục sau khi hoàn thiện xong Startup Mobile App
+            const id = req.params.id;
+            const { newCategoryData } = req.body;
 
+            const updateStatus = await categoryService.updateCategory(id, newCategoryData);
 
+            if (!updateStatus) {
+                return res.status(404).send({
+                    success: false,
+                    message: "Update category failed",
+                });
+            }
 
-            
+            return res.status(200).send({
+                success: true,
+                message: "Update category success",
+            });
         } catch (error) {
             console.log(error);
             return res.status(500).send({

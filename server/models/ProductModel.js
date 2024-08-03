@@ -29,17 +29,17 @@ const productSchema = new mongoose.Schema({
             "Product stock is required",
         ],
     },
-    category: {
-        type: String,
-        required: [
-            true,
-            "Category is required",
-        ],
-    },
     // category: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Category",
+    //     type: String,
+    //     required: [
+    //         true,
+    //         "Category is required",
+    //     ],
     // },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+    },
     images: [
         {
             public_id: {

@@ -18,6 +18,27 @@ class CategoryService {
         return categories;
     }
 
+    async updateCategory(id, newCategoryData) {
+        try {
+            // Update product category before delete them
+            const products = await ProductModel.find({ category: id });
+
+            // return products;
+
+            for (let product of products) {
+                product.category = newCategoryData;
+                await product.save();
+            }
+
+            await CategoryModel.findByIdAndUpdate(id, newCategoryData, { new: true });
+            return true;
+        } catch (error) {
+            console.log(error);
+            
+            return false;
+        }
+    }
+
     async deleteCategory(id) {
         try {
             // Update product category before delete them
