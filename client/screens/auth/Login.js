@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputBox from "../../components/form/InputBox";
+import axios from "axios";
 
 const Login = ({navigation}) => {
     const loginImage = "https://www.certifiedfinancialguardian.com/images/blog-wp-login.png";
@@ -8,15 +9,24 @@ const Login = ({navigation}) => {
     const [password, setPassword] = useState("");
 
     // Login function:
-    const handleLogin = () => {
-        // if (!email || !password) {
-        //     return alert("Please add email or password!");
-        // }
-        // else {
-        //     navigation.navigate("home");
-        // }
-
-        navigation.navigate("home");
+    const handleLogin = async () => {
+        if (!email || !password) {
+            return alert("Please add email or password!");
+        }
+    
+        try {
+            const response = await axios.post(
+                `http://192.168.118.67:8082/api/user/login`,
+                { email, password },
+                { headers: { "Content-Type": "application/json" } }
+            );
+    
+            alert(response.data.message); // Hiển thị thông điệp từ phản hồi
+            navigation.navigate("home"); // Điều hướng sau khi đăng nhập thành công
+        } catch (error) {
+            console.error('Login error:', error); // Log lỗi để kiểm tra
+            alert(error.response?.data?.message || 'An error occurred'); // Hiển thị thông báo lỗi
+        }
     };
 
     return (

@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider } from "react-redux";
 import Home from './screens/Home';
 import About from './screens/About';
 import ProductDetails from './screens/ProductDetails';
@@ -16,13 +15,11 @@ import Notifications from './screens/account/Notifications';
 import Profile from './screens/account/Profile';
 import MyOrders from './screens/account/MyOrders';
 import Dashboard from './screens/admin/Dashboard';
-import Store from './redux/Store';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
-        <Provider store={Store}>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="login">
                     <Stack.Screen name="home" component={Home} options={{
@@ -46,6 +43,5 @@ export default function App() {
                     <Stack.Screen name="mobile" component={About}/>
                 </Stack.Navigator>
             </NavigationContainer>
-        </Provider>
     );
 }
