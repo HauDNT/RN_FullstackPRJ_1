@@ -11,6 +11,7 @@ import connectDB from "./config/db.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import ProductRoutes from "./routes/ProductRoutes.js";
 import CategoryRoutes from "./routes/CategoryRoutes.js";
+import OrderRoutes from "./routes/OrderRoutes.js";
 
 // dot env config:
 dotenv.config();
@@ -38,6 +39,7 @@ app.use(cookieParser());
 app.use("/api/user", UserRoutes);
 app.use("/api/product", ProductRoutes);
 app.use("/api/category", CategoryRoutes);
+app.use("/api/order", OrderRoutes);
 
 app.get("/", (req, res) => {
     return res.status(200).send("<h1>Welcome to Server</h1>");
